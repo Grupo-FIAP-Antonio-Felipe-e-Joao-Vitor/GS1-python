@@ -1,6 +1,11 @@
 import requests
+import os
+import time
 
-def converterCEP(local):
+def limparTerminal ():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def converterCEP (local):
     url = "https://nominatim.openstreetmap.org/search"
     params = {
         "q": f"{local}, Brazil",
@@ -22,26 +27,58 @@ def converterCEP(local):
         return None
 
 def mostrarBoasVindas ():
-    print("=" * 65)
-    print("🌧️  Bem-vindo ao Sistema de Previsão de Enchentes do Brasil!  🌊")
-    print("-" * 65)
+    print("=" * 45)
+    print("🌧️ Sistema de Previsão de Enchentes no Brasil!  🌊")
+    print("-" * 45)
 
 def mostrarMenu ():
     print("[1] Procurar risco por CEP")
     print("[2] Procurar risco por Cidade")
 
 def menu ():
-    escolha = int(input("Deseja especificar a localização como: "))
+    escolha = str(input("Deseja especificar a localização como: "))
     while True:
-        if escolha == 1:
-            localizacao = input("Insira o CEP: ")
-            return localizacao
-        elif escolha == 2:
-            localizacao = input("Insira a cidade com o nome completo (ex: São Paulo, Minas Gerais): ")
-            return localizacao
+        if escolha == "1":
+            limparTerminal()
+            mostrarBoasVindas()
+            print("Para voltar digite 'voltar'")
+            localizacao = input("Insira o CEP: ").lower()
+            if localizacao == "voltar":
+                limparTerminal()
+                mostrarBoasVindas()
+                mostrarMenu()
+                menu()
+            else:
+                return localizacao
+        elif escolha == "2":
+            limparTerminal()
+            mostrarBoasVindas()
+            print("Para voltar digite 'voltar'")
+            localizacao = input("Insira a cidade com o nome completo (ex: São Paulo, Minas Gerais): ").lower()
+            if localizacao == "voltar":
+                limparTerminal()
+                mostrarBoasVindas()
+                mostrarMenu()
+                menu()
+            else:
+                return localizacao
         else:
-            print("Digite uma opção válida.")
-            escolha = int(input("Deseja especificar a localização como: "))
+            print("Opção inválida.")
+            time.sleep(2)
+            limparTerminal()
+            mostrarBoasVindas()
+            mostrarMenu()
+            menu()
+
+def calcularRisco (mm):
+    if mm > 80:
+        return "Alerta grave"
+    elif mm >= 50 and mm <= 80:
+        return "Risco alto"
+    elif mm < 50 and mm >= 20:
+        return "Risco moderado"
+    elif mm < 20:
+        return "Risco baixo"
 
 def precipitacao(lat, lon):
 
@@ -63,16 +100,22 @@ def precipitacao(lat, lon):
     dias = dados['daily']['time']
     precipitacoes = dados['daily']['precipitation_sum']
 
+    print("📅 Previsão de precipitação e risco de enchente 📅")
     for dia, mm in zip(dias, precipitacoes):
-        print(f"{dia}: {mm} mm")
+        risco = calcularRisco(mm)
+        print(f"{dia}: {mm} mm → {risco}")
 
 
 
 
+while True:
+    limparTerminal()
+    mostrarBoasVindas()
+    mostrarMenu()
+    local = menu()
+    coord = converterCEP(local)
 
-mostrarBoasVindas()
-mostrarMenu()
-local = menu()
-converterCEP()
-coord = converterCEP()
-precipitacao(coord[0], coord[1])
+    if coord:
+        precipitacao(coord[0], coord[1])
+    else:
+        print("❌ Localização inválida.")
