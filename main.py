@@ -43,6 +43,36 @@ def menu ():
             print("Digite uma opção válida.")
             escolha = int(input("Deseja especificar a localização como: "))
 
+def precipitacao(lat, lon):
+
+    # Parâmetros da requisição
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "daily": "precipitation_sum",
+        "timezone": "auto"
+    }
+
+    # Endpoint da API
+    url = "https://api.open-meteo.com/v1/forecast"
+
+    # Faz a requisição
+    resposta = requests.get(url, params=params)
+    dados = resposta.json()
+
+    dias = dados['daily']['time']
+    precipitacoes = dados['daily']['precipitation_sum']
+
+    for dia, mm in zip(dias, precipitacoes):
+        print(f"{dia}: {mm} mm")
+
+
+
+
+
 mostrarBoasVindas()
 mostrarMenu()
 local = menu()
+converterCEP()
+coord = converterCEP()
+precipitacao(coord[0], coord[1])
