@@ -117,5 +117,11 @@ while True:
 
     if coord:
         precipitacao(coord[0], coord[1])
+        voltar = str(input("Para voltar digite 'voltar': ")).lower
+        if voltar == "voltar":
+            limparTerminal()
+            mostrarBoasVindas()
+            mostrarMenu()
+            menu()
     else:
         print("❌ Localização inválida.")
