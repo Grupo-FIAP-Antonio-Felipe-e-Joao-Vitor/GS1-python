@@ -46,6 +46,7 @@ def mostrarMenu():
     # Define uma função para exibir as opções do menu principal.
     print("[1] Procurar risco por CEP")   # Opção para buscar por CEP.
     print("[2] Procurar risco por Cidade") # Opção para buscar por cidade.
+    print("[3] Sair do sistema") # Opção para sair do sistema.
 
 def menu():
     # Define a função que gerencia o menu de seleção do usuário.
@@ -80,6 +81,11 @@ def menu():
                 menu()              # Chama a função menu recursivamente.
             else:
                 return localizacao # Retorna o nome da cidade.
+        elif escolha == "3":
+            # Se a escolha for '3' (Sair).
+            print("Saindo do sistema...") # Mostra a mensagem de saída.
+            time.sleep(2) # Pausa 2 segundos para o usuário ler a mensagem.
+            quit() # Sai do sistema.
         else:
             # Se a escolha não for '1' nem '2', retorna None (opção inválida).
             return None
