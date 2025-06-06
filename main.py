@@ -1,3 +1,8 @@
+# Integrantes
+
+# Antônio Jacinto de Andrade Neto - RM 561777
+# Felipe Mendes Bicaletto - RM 563524
+
 import requests # Importa a biblioteca 'requests' para fazer requisições HTTP (para APIs).
 import os       # Importa a biblioteca 'os' para interagir com o sistema operacional (limpar terminal).
 import time     # Importa a biblioteca 'time' para pausar a execução (usado para 'sleep').
