@@ -85,10 +85,9 @@ def menu():
             # Se a escolha for '3' (Sair).
             print("Saindo do sistema...") # Mostra a mensagem de saída.
             time.sleep(2) # Pausa 2 segundos para o usuário ler a mensagem.
-            quit() # Sai do sistema.
+            quit() # Encerra o programa
         else:
-            # Se a escolha não for '1' nem '2', retorna None (opção inválida).
-            return None
+            return None # Se a escolha não for '1' nem '2' nem '3', retorna None (opção inválida).
 
 def calcularRisco(mm):
     # Define uma função para calcular o nível de risco de enchente baseado na precipitação em milímetros (mm).
